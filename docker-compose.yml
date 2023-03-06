@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    volumes:
+      - ~/.pg/pg_data/deployInstraction/var/lib/postgresql/data # save db files to folder
+    env_file:
+      - .env
+
+  web:
+    build: .
+    depends_on:
+      - postgres
+    volumes:
+      - static_volume:/deployInstraction/static # get static from prodject folder
+      - media_volume:/deployInstraction/media # get media from prodject folder
+    env_file:
+      - .env
+    command: >
+      bash -c "python manage.py collectstatic --noinput && python manage.py makemigrations && python manage.py migrate && python manage.py makemigrations core && python manage.py migrate core && gunicorn -b 0.0.0.0:8000 deployInstraction.wsgi:application" # start django App on 8000 port
+  nginx:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./docker/nginx/
+    container_name: nginx
+    image: nginx
+    volumes:
+      - static_volume:/deployInstraction/static # get static from prodject folder
+      - media_volume:/deployInstraction/media # get media from prodject folder
+
+    depends_on:
+      - web
+    ports:
+      - "80:80" # for HTTP connection
+      - "443:443" # for SSL, HTTPS connection
+
+volumes:
+  static_volume: # connect static
+  media_volume: # connect media
