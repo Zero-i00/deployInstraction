@@ -1,6 +1,10 @@
 # deployInstraction
 
+
+    
+
 <h1>Initial requirements.txt file</h1>
+
 ```
 Django==4.1.6
 gunicorn==20.1.0
@@ -24,6 +28,7 @@ load_dotenv()
 ```
 
 <h3>In main folder create .env file</h3>
+
 ```
 DJANGO_SECRET_KEY=key
 POSTGRES_PORT=port ( default - 5432 )
@@ -48,6 +53,7 @@ DEBUG = False
 ```
 
 <h3>Add to ALLOWED_HOSTS server IP and domain. And set CSRF politic</h3>
+
 ```
 ALLOWED_HOSTS = ["0.0.0.0", "server_ip", "ex.ru"]
 CSRF_TRUSTED_ORIGINS = ['https://ex.ru']
@@ -64,6 +70,7 @@ INSTALLED_APPS = [
 ```
 
 <h3>Add whitenoise to MIDDLEWARE</h3>
+
 ```
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -71,8 +78,8 @@ MIDDLEWARE = [
 ]
 ```
 
-
 <h3>Change your DB to Postgres</h3>
+
 ```
 if DEBUG:
     DATABASES = {
@@ -95,6 +102,7 @@ else:
 ```
 
 <h3>Configur your static and media files path</h3>
+
 ```
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
@@ -201,6 +209,7 @@ volumes:
 <h2>Create nginx config</h2>
 
 <h3>Create docker folder in main directory</h3>
+
 ```
 sudo mkdir /docker/
 sudo  /docker/nginx.conf #file
@@ -362,7 +371,7 @@ sudo docker rmi <image id>
 sudo docker exec -it <container id> bash
 ```
 
-<h2>Intsall certbot ( add HTTPS and SSL certificates )</h2>
+<h2>Install certbot ( add HTTPS and SSL certificates )</h2>
 
 <h3>Bash to nginx container</h3>
 
@@ -383,6 +392,7 @@ cat /etc/nginx/conf.d/default.conf
 ```
 
 <h3>After that, you should have it: </h3>
+
 ```
 server {
     listen 80 default_server;
