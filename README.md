@@ -385,7 +385,7 @@ sudo docker -it <nginx container id> bash
 certbot --nginx --email myemail@email.com --agree-tos --no-eff-email -d www.mydomain.com
 ```
 
-<h3>Chelck new certificates</h3>
+<h3>Check new certificates</h3>
 
 ```
 cat /etc/nginx/conf.d/default.conf
